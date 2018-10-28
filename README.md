@@ -6,4 +6,4 @@ Install [NodeJS](https://nodejs.org/en/)
 
 `npm install`
 
-`npm run start`
+`npm start`

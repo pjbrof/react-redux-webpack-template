@@ -1,32 +1,54 @@
-'use strict';
-
 const path = require('path');
-const args = require('minimist')(process.argv.slice(2));
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-// List of allowed environments
-const allowedEnvs = ['dev', 'dist', 'test'];
 
-// Set the correct environment
-let env;
-if (args._.length > 0 && args._.indexOf('start') !== -1) {
-  env = 'test';
-} else if (args.env) {
-  env = args.env;
-} else {
-  env = 'dev';
+module.exports = {
+    mode: 'development',
+    entry: './src/index.js',
+    output: {
+      path: path.resolve(__dirname, 'dist'),
+      filename: '[name].js'
+    },
+    devServer: {
+      contentBase: path.resolve(__dirname, 'dist'),
+      hot: true,
+      port: 8000
+    },
+    module: {
+      rules: [
+        {
+          enforce: "pre",
+          test: /\.(js|jsx)$/,
+          exclude: /node_modules/,
+          loader: "eslint-loader",
+        },
+        {
+          test: /\.(js|jsx)$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env', '@babel/preset-react']
+            }
+          }
+        },
+        {
+          test: /\.(css|scss|sass)$/,
+          use: ['style-loader', 'css-loader', 'sass-loader']
+        },
+        {
+          test: /\.(png|jpg|gif|woff|woff2)$/,
+          loader: 'url-loader?limit=8192'
+        },
+        {
+          test: /\.(mp4|ogg|svg)$/,
+          loader: 'file-loader'
+        }
+    ]
+  },
+  plugins: [
+    new HtmlWebpackPlugin({ template: './src/index.html' }),
+    new webpack.HotModuleReplacementPlugin()
+  ]
 }
-process.env.REACT_WEBPACK_ENV = env;
-
-/**
- * Build the webpack configuration
- * @param  {String} wantedEnv The wanted environment
- * @return {Object} Webpack config
- */
-function buildConfig(wantedEnv) {
-  let isValid = wantedEnv && wantedEnv.length > 0 && allowedEnvs.indexOf(wantedEnv) !== -1;
-  let validEnv = isValid ? wantedEnv : 'dev';
-  let config = require(path.join(__dirname, 'cfg/' + validEnv));
-  return config;
-}
-
-module.exports = buildConfig(env);

@@ -1,19 +1,16 @@
-require('normalize.css/normalize.css')
-require('styles/App.css')
+import React from 'react';
 
-import React from 'react'
+import Header from './Header';
+import Footer from './Footer';
 
-import Header from 'components/Header'
+import '../styles/App.css';
 
 export default class App extends React.Component {
-  constructor() {
-    super()
-  }
-
   render() {
     return (
       <div className="index">
-        <Header/>
+        <Header />
+        <Footer />
       </div>
     );
   }
