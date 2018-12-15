@@ -1,7 +1,10 @@
-export default function reducer(state = {
-  data: [],
-  error: null,
-}, action) {
+export default function reducer(
+  state = {
+    data: [],
+    error: null
+  },
+  action
+) {
   switch (action.type) {
     case 'FETCH_INFO_FULFILLED': {
       return { ...state, data: action.payload };

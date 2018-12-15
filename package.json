@@ -4,9 +4,8 @@
   "main": "",
   "scripts": {
     "build": "webpack",
-    "start": "npm-run-all test dev",
-    "dev": "webpack-dev-server",
-    "test": "jest"
+    "start": "webpack-dev-server",
+    "test": "jest --watchAll"
   },
   "repository": "",
   "keywords": [],
@@ -22,17 +21,19 @@
     "css-loader": "^1.0.1",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.6.0",
-    "eslint": "^5.8.0",
+    "eslint": "^5.10.0",
     "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^3.3.0",
     "eslint-loader": "^2.1.1",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-react": "^7.11.1",
     "file-loader": "^2.0.0",
     "html-webpack-plugin": "^3.2.0",
     "jest": "^23.6.0",
     "node-sass": "^4.9.4",
-    "npm-run-all": "^4.1.3",
+    "prettier": "^1.15.3",
     "react-hot-loader": "^4.3.11",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
@@ -43,7 +44,6 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "normalize.css": "^8.0.0",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "react-redux": "^5.1.0",
@@ -62,9 +62,20 @@
       "browser": true,
       "node": true
     },
+    "globals": {
+      "document": false
+    },
     "rules": {
-      "react/prefer-stateless-function": "warn",
-      "react/jsx-filename-extension": "warn"
+      "react/jsx-filename-extension": [
+        1,
+        {
+          "extensions": [
+            ".js",
+            ".jsx"
+          ]
+        }
+      ],
+      "arrow-body-style": 1
     }
   },
   "jest": {
